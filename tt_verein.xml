@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.1" type="plugin" group="content" method="upgrade">
+	<name>Content - TT_Verein</name>
+	<author>Dane Leube</author>
+	<creationDate>Juni 2012</creationDate>
+	<copyright>(C) 2013 Dane Leube</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>jugend@ttvettlingen.de</authorEmail>
+	<authorUrl>http://ttvettlingen.be</authorUrl>
+	<version>1.0.0</version>
+	<description>Dieses Plugin unterstützt Tischtennisvereine beim Einbinden von Tabellen, Spielplänen und Aufstellungen in Artikel</description>
+	<!-- Joomla! 1.6 Parameter Fields -->
+	<config>
+	<fields name="params">
+		<fieldset name="Vereinsdaten" group="category" label="Vereinsdaten">
+			<field name="VereinsName" type="text" default="0" label="Vereinsname" description="Der Name ihres Vereins" />
+			<field name="VereinsNummer" type="text" default="0" label="Vereinsnummer" description="Die Vereinsnummer" />
+			<field name="Runde" type="radio" default="vorrunde" label="Runde" description="Um welche Runde handelt es sich?">
+			  <option value="vorrunde">Vorrunde</option>
+			  <option value="rueckrunde">Rückrunde</option>
+			</field>
+			<field name="Verband" type="radio" default="TTVBW Südbaden" label="Verband" description="Der Verband des Vereins">
+			  <option value="TTVBW Südbaden">Südbadischer Tischtennisverband</option>
+			  <option value="TTVBW Baden">Badischer Tischtennisverband</option>
+			</field>
+			<field name="champ" type="text" default="0" label="Championship" description="Championship abkz." />
+		</fieldset>
+		</fields>
+		</config>
+
+<!-- 		<fieldset name="links" group="links" label="Link options"> -->
+<!-- 			<field name="Lorder" type="list" default="Date" label="PLG_ALLWEBLINKS_LINK_SORT" description="PLG_ALLWEBLINKS_LINK_SORT_DESC" > -->
+<!-- 			  <option value="created">PLG_ALLWEBLINKS_ACDATE</option> -->
+<!-- 			  <option value="created DESC">PLG_ALLWEBLINKS_CDATE</option> -->
+<!-- 			  <option value="modified">PLG_ALLWEBLINKS_ACMDATE</option> -->
+<!-- 			  <option value="modified DESC">PLG_ALLWEBLINKS_CMDATE</option> -->
+<!-- 			  <option value="hits DESC">PLG_ALLWEBLINKS_HITS</option> -->
+<!-- 			  <option value="title">PLG_ALLWEBLINKS_TITLE</option>  -->
+<!-- 			  <option value="a.ordering">PLG_ALLWEBLINKS_ORDERING</option> -->
+<!-- 			  <option value="RAND()">PLG_ALLWEBLINKS_RANDOM</option> -->
+<!-- 			</field> -->
+<!-- 			 <field name="Lshowhits" type="radio" default="0" label="PLG_ALLWEBLINKS_SHOW_HIST" description="PLG_ALLWEBLINKS_SHOW_HIST_DESC"> -->
+<!-- 			  <option value="0">PLG_ALLWEBLINKS_NO</option> -->
+<!-- 			  <option value="1">PLG_ALLWEBLINKS_YES</option> -->
+<!-- 			</field> -->
+<!-- 			<field name="Lpopuplinks" type="radio" default="1" label="PLG_ALLWEBLINKS_NEW_WINDOW" description="PLG_ALLWEBLINKS_NEW_WINDOW_DESC"> -->
+<!-- 			  <option value="0">PLG_ALLWEBLINKS_NO</option> -->
+<!-- 			  <option value="1">PLG_ALLWEBLINKS_YES</option> -->
+<!-- 			</field> -->
+<!-- 			<field name="Lrealurl" type="radio" default="0" label="PLG_ALLWEBLINKS_REALURL" description="PLG_ALLWEBLINKS_REALURL_DESC"> -->
+<!-- 			  <option value="0">PLG_ALLWEBLINKS_NO</option> -->
+<!-- 			  <option value="1">PLG_ALLWEBLINKS_YES</option> -->
+<!-- 			</field> -->
+<!-- 			<field name="Ldisplayldescription" type="radio" default="0" label="PLG_ALLWEBLINKS_DISPLAY_LDESCRIPTION" description="PLG_ALLWEBLINKS_DISPLAY_LDESCRIPTION_DESC"> -->
+<!-- 			  <option value="0">PLG_ALLWEBLINKS_NO</option> -->
+<!-- 			  <option value="1">PLG_ALLWEBLINKS_YES</option> -->
+<!-- 			</field> -->
+<!-- 			<field name="Lshowcdate" type="radio" default="0" label="PLG_ALLWEBLINKS_DISPLAY_CDATE" description="PLG_ALLWEBLINKS_DISPLAY_CDATE_DESC"> -->
+<!-- 			  <option value="0">PLG_ALLWEBLINKS_NO</option> -->
+<!-- 			  <option value="1">PLG_ALLWEBLINKS_YES</option> -->
+<!-- 			</field> -->
+<!-- 			<field name="Lshowmdate" type="radio" default="0" label="PLG_ALLWEBLINKS_DISPLAY_MDATE" description="PLG_ALLWEBLINKS_DISPLAY_MDATE_DESC"> -->
+<!-- 			  <option value="0">PLG_ALLWEBLINKS_NO</option> -->
+<!-- 			  <option value="1">PLG_ALLWEBLINKS_YES</option> -->
+<!-- 			</field> -->
+<!-- 			<field name="Lshowauthor" type="radio" default="0" label="PLG_ALLWEBLINKS_DISPLAY_AUTHOR" description="PLG_ALLWEBLINKS_DISPLAY_AUTHOR_DESC"> -->
+<!-- 			  <option value="0">PLG_ALLWEBLINKS_NO</option> -->
+<!-- 			  <option value="1">PLG_ALLWEBLINKS_YES</option> -->
+<!-- 			</field> -->
+<!-- 			<field name="Llengthoftitle" type="text" default="23" label="PLG_ALLWEBLINKS_TITLE_LENGTH" description="PLG_ALLWEBLINKS_TITLE_LENGTH_DESC" /> -->
+<!-- 			<field name="Lcatlinks" type="text" default="0" label="PLG_ALLWEBLINKS_NUM_LINKS" description="PLG_ALLWEBLINKS_NUM_LINKS_DESC" /> -->
+		
+<!-- 		<fieldset name="newlinks" group="newlinks" label="New Link options"> -->
+<!-- 			<field name="Lshownew" type="radio" default="0" label="PLG_ALLWEBLINKS_SHOW_NEW" description="PLG_ALLWEBLINKS_SHOW_NEW_DESC"> -->
+<!-- 			  <option value="0">PLG_ALLWEBLINKS_NO</option> -->
+<!-- 			  <option value="1">PLG_ALLWEBLINKS_YES</option> -->
+<!-- 			</field> -->
+<!-- 			<field name="Ldaysnew" type="text" default="3" label="PLG_ALLWEBLINKS_NDAYS_NEW" description="PLG_ALLWEBLINKS_NDAYS_NEW_DESC" /> -->
+<!-- 			<field name="Ltxtnew" type="text" default="*" label="PLG_ALLWEBLINKS_TXT_NEW" description="PLG_ALLWEBLINKS_TXT_NEW_DESC" /> -->
+<!-- 		</fieldset> -->
+		
+<!-- 		<fieldset name="modlinks" group="modlinks" label="Modified Link options"> -->
+<!-- 			<field name="Lshowmod" type="radio" default="0" label="PLG_ALLWEBLINKS_SHOW_MOD" description="PLG_ALLWEBLINKS_SHOW_MOD_DESC"> -->
+<!-- 			  <option value="0">PLG_ALLWEBLINKS_NO</option> -->
+<!-- 			  <option value="1">PLG_ALLWEBLINKS_YES</option> -->
+<!-- 			</field> -->
+<!-- 			<field name="Ldaysmod" type="text" default="3" label="PLG_ALLWEBLINKS_NDAYS_MOD" description="PLG_ALLWEBLINKS_NDAYS_MOD_DESC" /> -->
+<!-- 			<field name="Ltxtmod" type="text" default="*" label="PLG_ALLWEBLINKS_TXT_MOD" description="PLG_ALLWEBLINKS_TXT_MOD_DESC" /> -->
+<!-- 		</fieldset>		 -->
+
+<!-- 		</fieldset> -->
+		
+<!-- 		<fieldset name="layout" group="layout" label="Layout options"> -->
+<!-- 			 <field name="Lnumcols" type="list" default="3" label="PLG_ALLWEBLINKS_NUM_COLS" description="PLG_ALLWEBLINKS_NUM_COLS_DESC"> -->
+<!-- 			  <option value="1">PLG_ALLWEBLINKS_1_COLUMN</option> -->
+<!-- 			  <option value="2">PLG_ALLWEBLINKS_2_COLUMNS</option> -->
+<!-- 			  <option value="3">PLG_ALLWEBLINKS_3_COLUMNS</option> -->
+<!-- 			  <option value="4">PLG_ALLWEBLINKS_4_COLUMNS</option> -->
+<!-- 			</field>	 -->
+<!-- 			<field name="@spacer" type="spacer" default="" label="" description="" /> -->
+<!-- 			<field name="Llayout" type="list" default="0" label="PLG_ALLWEBLINKS_LAYOUT" description="PLG_ALLWEBLINKS_LAYOUT_DESC"> -->
+<!-- 			  <option value="0">PLG_ALLWEBLINKS_DEFAULT</option> -->
+<!-- 			  <option value="1">PLG_ALLWEBLINKS_BLOCKS</option> -->
+<!-- 			  <option value="2">PLG_ALLWEBLINKS_COLUMNS</option> -->
+<!-- 			  <option value="3">PLG_ALLWEBLINKS_TABS</option> -->
+<!-- 			  <option value="4">PLG_ALLWEBLINKS_SLIDER</option> -->
+<!-- 			</field>	 -->
+<!-- 			<field name="moduleclass_sfx" type="text" default="" label="PLG_ALLWEBLINKS_CLASS_SUF" description="PLG_ALLWEBLINKS_CLASS_SUF_DESC" /> -->
+<!-- 		</fieldset> -->
+		
+<!-- 	</fields> -->
+<!-- 	</config> -->
+	<!-- End Joomla! 1.6 Parameter Fields -->
+
+	<files>
+		<file plugin="tt_verein">tt_verein.php</file>
+		<folder>css</folder>
+		<folder>helper</folder>
+	</files>
+<!--   	<languages folder="language"> -->
+<!-- 		<language tag="en-GB">en-GB.plg_content_allweblinks.ini</language> -->
+<!-- 		<language tag="en-GB">en-GB.plg_content_allweblinks.sys.ini</language> -->
+<!-- 		<language tag="nl-NL">nl-NL.plg_content_allweblinks.ini</language> -->
+<!-- 		<language tag="nl-NL">nl-NL.plg_content_allweblinks.sys.ini</language> -->
+<!-- 	</languages> -->
+</extension>
+

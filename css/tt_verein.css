@@ -1,0 +1,232 @@
+/* ############################ */
+/* ####### tt_verein_styling ####### */
+/* ############################ */
+/* Box */
+table {
+	font: 11px verdana, verdana, arial;
+	margin-left:auto;margin-right:auto;
+	padding: 0;
+	border-collapse: collapse;
+	text-align: left;
+	color: #333;
+	line-height: 19px;
+}
+
+caption {
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: 20px;
+	text-align: left;
+	text-transform: uppercase;
+}
+
+td {
+	margin: 0;
+	padding: 20px 10px;
+	border: 1px dotted #f5f5f5;
+}
+
+th {
+	font-weight: normal;
+	text-transform: uppercase;
+}
+
+thead tr th {
+	background-color: #575757 !important;
+	padding: 20px 10px !important;
+	color: #fff;
+	font-weight: bold;
+	border-right: 2px solid #333;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+tfoot tr th,tfoot tr td {
+	background-color: transparent;
+	padding: 20px 10px;
+	color: #ccc;
+	border-top: 1px solid #ccc;
+}
+
+tbody tr th {
+	padding: 20px 10px;
+	border-bottom: 1px dotted #fafafa;
+}
+
+tr {
+	background-color: #FBFDF6;
+}
+
+tr.odd {
+	background-color: #EDF7DC;
+}
+
+tr:hover {
+	
+}
+
+tr:hover td,tr:hover td a,tr:hover th a {
+	color: #a10000;
+}
+
+td:hover {
+	
+}
+
+tr:hover th a:hover {
+	background-color: #F7FBEF;
+	border-bottom: 2px solid #86C200;
+}
+
+table a {
+	color: #000000 !important;
+	background-image: none;
+	text-decoration: none;
+	border-bottom: 1px dotted #8A8F95;
+	padding: 2px;
+	padding-right: 12px;
+	background: transparent
+		url(http://www.alvit.de/vf/csstablegallery/link.gif) no-repeat 100%
+		50%;
+}
+
+/* table a:hover { */
+/* 	color: #BBC4CD !important; */
+/* 	background-image: none; */
+/* 	text-decoration: none; */
+/* 	border-bottom: 3px solid #333; */
+/* 	padding: 2px; */
+/* 	padding-right: 12px; */
+/* /* 	color: #A2A2A2 !important; */ */
+/* 	background: transparent */
+/* 		url(http://www.alvit.de/vf/csstablegallery/link.gif) no-repeat 100% */
+/* 		50%; */
+/* } */
+
+/* table a:visited { */
+/* 	text-decoration: none; */
+/* 	border-bottom: 1px dotted #333; */
+/* 	text-decoration: none; */
+/* 	padding-right: 12px; */
+/* 	color: #A2A2A2 !important; */
+/* 	background: transparent */
+/* 		url(http://www.alvit.de/vf/csstablegallery/visitedLink.gif) no-repeat */
+/* 		100% 50%; */
+/* } */
+
+table a:visited:hover {
+	background-image: none;
+	text-decoration: none;
+	border-bottom: 3px solid #333;
+	padding: 2px;
+	padding-right: 12px;
+	color: #A2A2A2 !important;
+	background: transparent
+		url(http://www.alvit.de/vf/csstablegallery/visitedLink.gif) no-repeat
+		100% 50%;
+}
+
+/* a#myId:link { */
+/* 	color: #00CC66 !important; */
+/* 	text-decoration: none */
+/* } */
+
+/* a#myId:visited { */
+/* 	color: #ff0000 !important; */
+/* 	text-decoration: none */
+/* } */
+
+/* a#myId:hover { */
+/* 	color: #f00000; */
+/* 	text-decoration: none */
+/* } */
+
+/* a#myId:active { */
+/* 	color: #f00000; */
+/* 	text-decoration: none */
+/* } */
+/* table { */
+/* 		border-collapse:collapse; */
+/* 		background:#EFF4FB url(http://www.roscripts.com/images/teaser.gif) repeat-x; */
+/* 		border-left:1px solid #686868; */
+/* 		border-right:1px solid #686868; */
+/* 		font:0.8em/145% 'Trebuchet MS',helvetica,arial,verdana; */
+/* 		color: #333; */
+/* } */
+
+/* td, th { */
+/* 		padding:5px; */
+/* } */
+
+/* caption { */
+/* 		padding: 0 0 .5em 0; */
+/* 		text-align: left; */
+/* 		font-size: 1.4em; */
+/* 		font-weight: bold; */
+/* 		text-transform: uppercase; */
+/* 		color: #333; */
+/* 		background: transparent; */
+/* } */
+
+/* /* =links */
+/* ----------------------------------------------- */
+*
+/
+
+/* table a { */
+/* 		color:#950000; */
+/* 		text-decoration:none; */
+/* } */
+
+/* table a:link { */
+/* 	color:#000000; */
+/* } */
+
+/* table a:visited { */
+/* 		font-weight:normal; */
+/* 		color:#666; */
+/* 		text-decoration: line-through; */
+/* } */
+
+/* table a:hover { */
+/* 		border-bottom: 1px dashed #bbb; */
+/* } */
+
+/* /* =head =foot */
+/* ----------------------------------------------- */
+ 
+*
+/
+
+/* thead th, tfoot th, tfoot td { */
+/* 		background:#333 url(http://www.roscripts.com/images/llsh.gif) repeat-x; */
+/* 		color:#fff */
+/* } */
+
+/* tfoot td { */
+/* 		text-align:right */
+/* } */
+
+/* /* =body */
+/* ----------------------------------------------- */
+ 
+*
+/
+
+/* tbody th, tbody td { */
+/* 		border-bottom: dotted 1px #333; */
+/* } */
+
+/* tbody th { */
+/* 		white-space: nowrap; */
+/* } */
+
+/* tbody th a { */
+/* 		color:#333; */
+/* } */
+
+/* .odd {} */
+
+/* tbody tr:hover { */
+/* 		background:#fafafa */
+/* } */
