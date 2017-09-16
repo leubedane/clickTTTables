@@ -136,6 +136,66 @@ class ClickTT {
 		return $seasonNames;
 	}
 
+	function getNextMatches($clubId){
+		if(!$clubId){
+			return;
+		}
+		$content = $this->getUserAgentSite($this->buildClubInfoDisplayUrl($clubId));
+		$dom = $this->getDomForData($content);
+		$table = $dom->find("table[class=result-set]",1);
+		$rows = array_slice($table->find('tr'), 1);
+		$newTable = '<table class="table table-bordered"><tbody>';
+
+		foreach ( $rows as $element ) {
+			
+			//echo '<h3>'. $element->plaintext . '</h3>';
+			$newTable."<tr>";
+			$cols = $element->find('td'); // array_slice($element->find('td'), 2);
+			if(trim($cols[1]->plaintext) !== '' && trim($cols[1]->plaintext) !== '&nbsp;'){
+				$currentDate = $cols[1]->plaintext;
+			}
+			if( strpos($cols[7]->plaintext, 'spielfrei') || strpos($cols[6]->plaintext, 'spielfrei')){
+				continue;
+			}
+			$newTable.="<td style='line-height:5px;'>".$currentDate."</td>";//."<br/>".$cols[2]->plaintext."Uhr</td>";
+			$newTable.="<td style='line-height:5px;'>".$cols[2]->plaintext."Uhr</td>";
+			//$newTable.=."Uhr";
+			$newTable.="<td style='line-height:5px;'>".$this->getTeamPrefixName($cols[6]->plaintext, $cols[5]->plaintext)."</td>";
+			$newTable.="<td style='line-height:5px;'>".$this->getTeamPrefixName($cols[7]->plaintext, $cols[5]->plaintext)."</td>";
+			
+			
+			$newTable.="</tr>";
+
+			
+		}
+		$newTable.="</tbody></table>";
+		//return $this->fitTableForOutput($table);
+		return $newTable;
+	}
+
+	function getTeamPrefixName($colName, $championship) {
+		if(strpos($colName, $this->clubName)=== false){
+			return $colName;
+		}
+		if(strpos($championship, "Ju") !== false){
+			$colName = str_replace( $this->clubName, "Jugend", $colName);
+			return $colName;
+		}
+		if(strpos($championship, "He") !== false){
+			$colName = str_replace( $this->clubName, "Herren", $colName);
+			return $colName;
+		}
+		if(strpos($championship, "Da") !== false){
+			$colName = str_replace( $this->clubName, "Damen", $colName);
+			return $colName;
+		}
+		if(strpos($championship, "Sm") !== false){
+			$colName = str_replace( $this->clubName, "Schüler", $colName);
+			return $colName;
+		}
+		return $colName;
+	}
+
 	function getTeamTable($championship, $group) {
 		if(DEBUG)
 			echo "<br />getTeamTable($championship, $group)";
@@ -838,7 +898,11 @@ class ClickTT {
 	function buildTeamProfilUrl() {
 		return $this->clickTTUrl . "clubTeams?club=" . $this->clubID;
 	}
+	//clubInfoDisplay?club=1288
 
+	function buildClubInfoDisplayUrl($clubId) {
+		return $this->clickTTUrl . "clubInfoDisplay?club=" . $clubId;
+	}
 	/**
 	 * @param string $seasonName Saison des Spielerportraits z.B. "2008/09"
 	 * @param int $personID Der personid ist die eindeutige Nummer die jeder Spieler in click-TT hat
