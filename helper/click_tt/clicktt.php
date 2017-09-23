@@ -144,29 +144,38 @@ class ClickTT {
 		$dom = $this->getDomForData($content);
 		$table = $dom->find("table[class=result-set]",1);
 		$rows = array_slice($table->find('tr'), 1);
-		$newTable = '<table class="table table-bordered"><tbody>';
-
+		$newTable = '<table class="table-sm table-bordered" style="text-align:center; width:100%;"><tbody>';
+		$newTable.='<tr><th>Datum</th><th>Uhrzeit</th><th>Heim</th><th>Gast</th></tr>';
+		$counter = 0;
 		foreach ( $rows as $element ) {
-			
+			if($counter > 10){
+				break;
+			}
 			//echo '<h3>'. $element->plaintext . '</h3>';
 			$newTable."<tr>";
 			$cols = $element->find('td'); // array_slice($element->find('td'), 2);
 			if(trim($cols[1]->plaintext) !== '' && trim($cols[1]->plaintext) !== '&nbsp;'){
 				$currentDate = $cols[1]->plaintext;
 			}
-			if( strpos($cols[7]->plaintext, 'spielfrei') || strpos($cols[6]->plaintext, 'spielfrei')){
+			if( strpos($cols[7]->plaintext, 'spielfrei') !== false || strpos($cols[6]->plaintext, 'spielfrei') !== false){
 				continue;
 			}
-			$newTable.="<td style='line-height:5px;'>".$currentDate."</td>";//."<br/>".$cols[2]->plaintext."Uhr</td>";
-			$newTable.="<td style='line-height:5px;'>".$cols[2]->plaintext."Uhr</td>";
+			$newTable.="<td>".$currentDate."</td>";//."<br/>".$cols[2]->plaintext."Uhr</td>";
+			$newTable.="<td>".$cols[2]->plaintext."</td>";
 			//$newTable.=."Uhr";
-			$newTable.="<td style='line-height:5px;'>".$this->getTeamPrefixName($cols[6]->plaintext, $cols[5]->plaintext)."</td>";
-			$newTable.="<td style='line-height:5px;'>".$this->getTeamPrefixName($cols[7]->plaintext, $cols[5]->plaintext)."</td>";
+			$newTable.="<td>".$this->getTeamPrefixName($cols[6]->plaintext, $cols[5]->plaintext)."</td>";
+			$newTable.="<td>".$this->getTeamPrefixName($cols[7]->plaintext, $cols[5]->plaintext)."</td>";
+
+			// $newTable.="<td style='line-height:5px;'>".$currentDate."</td>";//."<br/>".$cols[2]->plaintext."Uhr</td>";
+			// $newTable.="<td style='line-height:5px;'>".$cols[2]->plaintext."Uhr</td>";
+			// //$newTable.=."Uhr";
+			// $newTable.="<td style='line-height:5px;'>".$this->getTeamPrefixName($cols[6]->plaintext, $cols[5]->plaintext)."</td>";
+			// $newTable.="<td style='line-height:5px;'>".$this->getTeamPrefixName($cols[7]->plaintext, $cols[5]->plaintext)."</td>";
 			
 			
 			$newTable.="</tr>";
 
-			
+			$counter ++;
 		}
 		$newTable.="</tbody></table>";
 		//return $this->fitTableForOutput($table);
