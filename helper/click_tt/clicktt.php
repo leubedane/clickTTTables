@@ -136,6 +136,37 @@ class ClickTT {
 		return $seasonNames;
 	}
 
+	function getNextHomeMatches($clubId){
+		if(!$clubId){
+			return;
+		}
+		$content = $this->getUserAgentSite($this->buildClubInfoDisplayUrl($clubId));
+		$dom = $this->getDomForData($content);
+		$table = $dom->find("table[class=result-set]",1);
+		$rows = array_slice($table->find('tr'), 1);
+		$result = '';
+		$counter = 0;
+		foreach ( $rows as $element ) {
+			
+			$cols = $element->find('td'); // array_slice($element->find('td'), 2);
+			if(trim($cols[1]->plaintext) !== '' && trim($cols[1]->plaintext) !== '&nbsp;'){
+				$currentDate = "<p style='text-align:center;'> <span style='text-decoration: underline;'>".trim($cols[1]->plaintext).", ".trim($cols[2]->plaintext)."Uhr:</span></p>";
+			}
+			if(strpos($cols[6]->plaintext, 'TTC Borussia Grißheim') === false){
+				continue;
+			}
+			if( strpos($cols[7]->plaintext, 'spielfrei') !== false || strpos($cols[6]->plaintext, 'spielfrei') !== false){
+				continue;
+			}
+			$result.= $currentDate;
+			$result.="<p style='text-align:center;'><strong>".$this->getTeamPrefixName($cols[6]->plaintext, $cols[5]->plaintext)."</strong> - ".$cols[7]->plaintext."</p>";
+			$counter++;
+			
+		}
+		return $result;
+		
+	}
+
 	function getNextMatches($clubId){
 		if(!$clubId){
 			return;
@@ -183,7 +214,7 @@ class ClickTT {
 	}
 
 	function getTeamPrefixName($colName, $championship) {
-		if(strpos($colName, $this->clubName)=== false){
+		if(strpos($colName, $this->clubName)=== false && strpos($colName, "TTC Borussia Grißheim") === false){
 			return $colName;
 		}
 		if(strpos($championship, "Ju") !== false){
@@ -200,6 +231,23 @@ class ClickTT {
 		}
 		if(strpos($championship, "Sm") !== false){
 			$colName = str_replace( $this->clubName, "Schüler", $colName);
+			return $colName;
+		}
+		if(strpos($championship, "U-18") !== false){
+			$colName = str_replace( "TTC Borussia Grißheim", "Jugend", $colName);
+			return $colName;
+		}
+		if(strpos($championship, "JUN") !== false){
+			
+			$colName = str_replace( "TTC Borussia Grißheim", "Jugend", $colName);
+			return $colName;
+		}
+		if(strpos($championship, "Bezirksliga") !== false){
+			$colName = str_replace( "TTC Borussia Grißheim", "Herren", $colName);
+			return $colName;
+		}
+		if(strpos($championship, "Kreisklasse") !== false){
+			$colName = str_replace( "TTC Borussia Grißheim", "Herren", $colName);
 			return $colName;
 		}
 		return $colName;

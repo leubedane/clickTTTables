@@ -39,22 +39,25 @@ class plgContenttt_verein  extends JPlugin
 		$positions_regex="/{ttverein_formation.*}/";
 		$timeTable_regex="/{ttverein_timeTable.*}/";
 		$nextMatch_regex="/{ttverein_matchNext.*}/";
+		$nextHomeMatch_regex="/{ttverein_matchHomeNext.*}/";
 		
 		preg_match_all( $table_regex, $article->text, $table_matches);
 		preg_match_all($positions_regex, $article->text, $position_matches);
 		preg_match_all($timeTable_regex, $article->text, $timeTable_matches);
 		preg_match_all($nextMatch_regex, $article->text, $position_nextMatches);
+		preg_match_all($nextHomeMatch_regex, $article->text, $position_nextHomeMatches);
 		
 		
 		// no result so nothing to do
-		if ( !count( $table_matches[0] ) && !count($position_matches[0]) && !count($timeTable_matches[0]) ) {
+		if ( !count( $table_matches[0] ) && !count($position_matches[0]) && !count($timeTable_matches[0]) 
+				&& !count($position_nextMatches[0]) && !count($position_nextHomeMatches[0])  ) {
 			return true;
 		}
 		
 		$this->verband = utf8_decode($this->params->def('Verband'));
 		$this->vereinsNr = utf8_decode($this->params->def('VereinsNummer'));
 		$this->vereinsName = utf8_decode($this->params->def('VereinsName'));
-		
+
 		$clickTT = new ClickTT($this->verband, $this->vereinsNr, $this->vereinsName);
 		//case table
 		if($this->DEBUG) {
@@ -120,6 +123,15 @@ class plgContenttt_verein  extends JPlugin
 			$table =str_replace('<table class="result-set"', '<table class="table table-bordered"', $table);
 			//show gameplan
 			$article->text = preg_replace($nextMatch_regex, $table, $article->text, 1);
+		}
+
+		if(count($position_nextHomeMatches[0])) {
+			//get params
+			$club = $this->getParameter("club", $position_nextHomeMatches[0][0]);
+			$table = $clickTT->getNextHomeMatches($club);
+			
+			//show gameplan
+			$article->text = preg_replace($nextHomeMatch_regex, $table, $article->text, 1);
 		}
 	}
 	
