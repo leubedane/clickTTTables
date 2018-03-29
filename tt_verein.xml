@@ -20,8 +20,8 @@
 			  <option value="rueckrunde">Rückrunde</option>
 			</field>
 			<field name="Verband" type="radio" default="TTVBW Südbaden" label="Verband" description="Der Verband des Vereins">
-			  <option value="TTVBW Südbaden">Südbadischer Tischtennisverband</option>
-			  <option value="TTVBW Baden">Badischer Tischtennisverband</option>
+			  <option value="1">Südbadischer Tischtennisverband</option>
+			  <option value="2">Badischer Tischtennisverband</option>
 			</field>
 			<field name="champ" type="text" default="0" label="Championship" description="Championship abkz." />
 		</fieldset>

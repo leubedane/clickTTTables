@@ -24,7 +24,7 @@ class plgContenttt_verein  extends JPlugin
 	public $DEBUG = false;
 	protected $verband;
 	protected $vereinsNr;
-	protected $vereinsName;
+	protected $vereinsId;
 
 	function __construct( &$subject, $config )
 	{
@@ -56,14 +56,17 @@ class plgContenttt_verein  extends JPlugin
 		
 		$this->verband = utf8_decode($this->params->def('Verband'));
 		$this->vereinsNr = utf8_decode($this->params->def('VereinsNummer'));
-		$this->vereinsName = utf8_decode($this->params->def('VereinsName'));
+		$this->vereinsId = utf8_decode($this->params->def('VereinsName'));
 
-		$clickTT = new ClickTT($this->verband, $this->vereinsNr, $this->vereinsName);
+		$clickTT = new ClickTT($this->verband, $this->vereinsNr, $this->vereinsId);
 		//case table
 		if($this->DEBUG) {
 			echo "TabellenMatches: ".count($table_matches[0]);
 			echo " SpielplanMatches: ".count($timeTable_matches[0]);
 			echo " AufstellungMatches: ".count($position_matches[0]);
+			echo " next matches: ".count($position_nextMatches[0]);
+			echo " homematches: ".count($position_nextHomeMatches[0]);
+			
 			echo "<br/>";
 			echo "<br/>";
 		}
@@ -84,7 +87,6 @@ class plgContenttt_verein  extends JPlugin
 			$championship = $this->getParameter("champ", $position_matches[0][0]);
 			$group = $this->getParameter('group', $position_matches[0][0]);
 			$teamTable = $this->getParameter('id', $position_matches[0][0]);
-			//$pageState = $this->getParameter('runde', $position_matches[0][0]);
 			$pageState = $this->params->get('Runde');
 			if(empty($championship)){
 				$championship = $this->params->get('champ');
@@ -101,7 +103,7 @@ class plgContenttt_verein  extends JPlugin
 			$championship = $this->getParameter("champ", $timeTable_matches[0][0]);
 			$group = $this->getParameter('group', $timeTable_matches[0][0]);
 			$teamTable = $this->getParameter('id', $timeTable_matches[0][0]);
-			//$pageState = $this->getParameter('runde', $timeTable_matches[0][0]);
+
 			$pageState = $this->params->get('Runde');
 			if(empty($championship)){
 				$championship = $this->params->get('champ');
@@ -138,8 +140,16 @@ class plgContenttt_verein  extends JPlugin
 	//this function gets the parameter for the given property in first argument in the given word (second parameter)
 	public function getParameter($parameterName, $word) {
 		$regex = "/".$parameterName.'=".*"'."/U";
-		preg_match($regex, $word, $param);
-		preg_match('/".*?"/', $param[0], $result);
+
+		$matchCount = preg_match($regex, $word, $param);
+		if($matchCount < 1){
+			return '';
+		}
+
+		$matchCount =preg_match('/".*?"/', $param[0], $result);
+		if($matchCount < 1){
+			return '';
+		}
 		return str_replace('"', "",$result[0]);
 	}
 	

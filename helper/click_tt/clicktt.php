@@ -35,6 +35,7 @@ class ClickTT {
 
 		$this->setDefaultRegExp();
 		$verbandNeu = new Verband();
+
 		$this->verband = $verbandNeu->getVerband($verbandName);
 		$this->clickTTUrl =  $this->verband->url;
 
@@ -103,7 +104,8 @@ class ClickTT {
 		if(!$clubName)
 			return null;
 
-		$content = file_get_contents($this->buildClubSearchUrl($clubName));
+		$clubUrl = $this->buildClubSearchUrl($clubName);
+		$content = file_get_contents($clubUrl);
 		preg_match($this->getRegExp("SearchClubID"), $content, $id);
 
 		return intval($id[1]);
@@ -142,6 +144,7 @@ class ClickTT {
 		}
 		$content = $this->getUserAgentSite($this->buildClubInfoDisplayUrl($clubId));
 		$dom = $this->getDomForData($content);
+
 		$table = $dom->find("table[class=result-set]",1);
 		$rows = array_slice($table->find('tr'), 1);
 		$result = '';
@@ -161,7 +164,9 @@ class ClickTT {
 			$result.= $currentDate;
 			$result.="<p style='text-align:center;'><strong>".$this->getTeamPrefixName($cols[6]->plaintext, $cols[5]->plaintext)."</strong> - ".$cols[7]->plaintext."</p>";
 			$counter++;
-			
+		}
+		if($result == ''){
+			$result.="Aktuell keine Heimspiele";
 		}
 		return $result;
 		
@@ -197,13 +202,6 @@ class ClickTT {
 			$newTable.="<td>".$this->getTeamPrefixName($cols[6]->plaintext, $cols[5]->plaintext)."</td>";
 			$newTable.="<td>".$this->getTeamPrefixName($cols[7]->plaintext, $cols[5]->plaintext)."</td>";
 
-			// $newTable.="<td style='line-height:5px;'>".$currentDate."</td>";//."<br/>".$cols[2]->plaintext."Uhr</td>";
-			// $newTable.="<td style='line-height:5px;'>".$cols[2]->plaintext."Uhr</td>";
-			// //$newTable.=."Uhr";
-			// $newTable.="<td style='line-height:5px;'>".$this->getTeamPrefixName($cols[6]->plaintext, $cols[5]->plaintext)."</td>";
-			// $newTable.="<td style='line-height:5px;'>".$this->getTeamPrefixName($cols[7]->plaintext, $cols[5]->plaintext)."</td>";
-			
-			
 			$newTable.="</tr>";
 
 			$counter ++;
@@ -234,7 +232,7 @@ class ClickTT {
 			return $colName;
 		}
 		if(strpos($championship, "U-18") !== false){
-			$colName = str_replace( "TTC Borussia Grißheim", "Jugend", $colName);
+			$colName = str_replace( "TTC Borussia Grißheim", "Jugend II", $colName);
 			return $colName;
 		}
 		if(strpos($championship, "JUN") !== false){
