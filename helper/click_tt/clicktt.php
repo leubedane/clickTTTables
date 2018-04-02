@@ -29,7 +29,7 @@ class ClickTT {
 	 * 	in Tabellen oder Terminplänen benutzt wird. Über die Vereinssuche (Adressen, Mannschaften, Spieler, Ergebnisse)
 	 *  muss dieser Name zur Vereinsseite führen.
 	 */
-	function ClickTT($verbandName, $vereinsNummer, $vereinsName, $id=null) {
+	function __construct($verbandName, $vereinsNummer, $vereinsName, $id=null) {
 		if(DEBUG)
 			echo "<br />new ClickTT($verbandName, $vereinsNummer, $vereinsName, $id)";
 
@@ -145,7 +145,10 @@ class ClickTT {
 		$content = $this->getUserAgentSite($this->buildClubInfoDisplayUrl($clubId));
 		$dom = $this->getDomForData($content);
 
-		$table = $dom->find("table[class=result-set]",1);
+		$table = $this->getNextMatchTable($dom);
+		if($table == null){
+			return "Keine Spiele gefunden.";
+		}
 		$rows = array_slice($table->find('tr'), 1);
 		$result = '';
 		$counter = 0;
@@ -172,13 +175,24 @@ class ClickTT {
 		
 	}
 
+	function getNextMatchTable($dom){
+		$table = $dom->find("table[class=result-set]",1);
+		if($table == null){
+			$table = $dom->find("table[class=result-set]",0);
+		}
+		return $table;
+	}
+
 	function getNextMatches($clubId){
 		if(!$clubId){
 			return;
 		}
 		$content = $this->getUserAgentSite($this->buildClubInfoDisplayUrl($clubId));
 		$dom = $this->getDomForData($content);
-		$table = $dom->find("table[class=result-set]",1);
+		$table = $this->getNextMatchTable($dom);
+		if($table == null){
+			return "Keine Spiele gefunden.";
+		}
 		$rows = array_slice($table->find('tr'), 1);
 		$newTable = '<table class="table-sm table-bordered" style="text-align:center; width:100%;"><tbody>';
 		$newTable.='<tr><th>Datum</th><th>Uhrzeit</th><th>Heim</th><th>Gast</th></tr>';
