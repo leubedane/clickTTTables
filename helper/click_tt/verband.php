@@ -20,8 +20,8 @@ class Verband {
 		$verbaende[$i]->name = "TTVBW Südbaden";
 		$verbaende[$i]->id = 1;
 		$verbaende[$i]->federation = "SbTTV";
-		$verbaende[$i]->domain = "http://ttvbw.click-tt.de";
-		$verbaende[$i++]->url = "http://ttvbw.click-tt.de/cgi-bin/WebObjects/ClickTTVBW.woa/wa/";
+		$verbaende[$i]->domain = "http://ttbw.click-tt.de";
+		$verbaende[$i++]->url = "https://ttbw.click-tt.de/cgi-bin/WebObjects/nuLigaTTDE.woa/wa/";
 		
 		$verbaende[$i] = new stdClass();
 		$verbaende[$i]->name = "TTVBW Baden";
